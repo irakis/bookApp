@@ -7,6 +7,10 @@
     books: {
       booksPanel: '.books-panel',
       bookList: '.books-list',
+      bookImageLink: '#data-id',
+      cardOfBook: '.book',
+      bookImage: '.book__image',
+      //jak zrobić referencję do a i clasy book_image
     },
     templateOf: {
       bookTemplate: '#template-book',
@@ -18,27 +22,37 @@
 
   };
 
-  const renderBookList = function() {
+  const render = function() {
 
     for (const book of dataSource.books) {
 
       const generatedHTML = templates.bookCard(book);
-      console.log(generatedHTML);
-      //generate HTML based on template
-
       const element = utils.createDOMFromHTML(generatedHTML);
-      console.log(element);
-      //create element using utils
-
       const listOfBooks = document.querySelector(select.books.bookList);
-      //find list DOM
-
       listOfBooks.appendChild(element);
-      //prepare book cart, inmages //add element
+    }
+  };
+  render();
+
+  const initAction = function() {
+    const books = document.querySelectorAll(select.books.bookImage);
+      
+    const favoriteBooks = [];
+    console.log(favoriteBooks);
+
+    for(const book of books) {
+      book.addEventListener('dblclick', function(event){
+        event.preventDefault();
+
+        book.classList.add('favorite');
+        const bookId = book.getAttribute(select.books.bookImageLink);
+        favoriteBooks.push(bookId);
+      });
     }
 
+    console.log(favoriteBooks);
+  
   };
-  renderBookList();
-  console.log('renderBookList runs!')
-
+  initAction();
+  
 }
