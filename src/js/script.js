@@ -10,7 +10,6 @@
       bookImageLink: '#data-id',
       cardOfBook: '.book',
       bookImage: '.book__image',
-      //jak zrobić referencję do a i clasy book_image
     },
     templateOf: {
       bookTemplate: '#template-book',
@@ -35,31 +34,32 @@
   render();
 
   const initAction = function() {
-    const books = document.querySelectorAll(select.books.bookImage);
+    const booksContainer = document.querySelector(select.books.booksPanel);
       
     const favoriteBooks = [];
     console.log(favoriteBooks);
 
-    for(const book of books) {
-      book.addEventListener('dblclick', function(event){
-        event.preventDefault();
-        const bookId = book.getAttribute('data-id');
-        let index = favoriteBooks.indexOf(bookId);
+    booksContainer.addEventListener('dblclick', function(event){
+      event.preventDefault();
 
-        if(index == -1){
-          book.classList.add('favorite');
-        
-          favoriteBooks.push(bookId);
-          console.log('czyta id po if?:',bookId);
+      const bookId = event.target.offsetParent.getAttribute('data-id');
+      const index = favoriteBooks.indexOf(bookId);
 
-        }else {
-          book.classList.remove('favorite');
-          favoriteBooks.splice(index, 1);
-        }
-        console.log('tablica po if: ',favoriteBooks);
+      console.log('event:', event);
+      console.log('bookId:', bookId, 'index:', index);
 
-      });
-    }
+
+      if(!favoriteBooks.includes(index) && event.target.offsetParent.classList.contains('book__image')){
+
+        event.target.offsetParent.classList.add('favorite');
+        favoriteBooks.push(bookId);
+
+      }else if(favoriteBooks.includes(index)){
+
+        event.target.offsetParent.classList.remove('favorite');
+        favoriteBooks.splice(index, 1);
+      }
+    });
 
     console.log(favoriteBooks);
   
