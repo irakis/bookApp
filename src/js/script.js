@@ -43,10 +43,21 @@
     for(const book of books) {
       book.addEventListener('dblclick', function(event){
         event.preventDefault();
+        const bookId = book.getAttribute('data-id');
+        let index = favoriteBooks.indexOf(bookId);
 
-        book.classList.add('favorite');
-        const bookId = book.getAttribute(select.books.bookImageLink);
-        favoriteBooks.push(bookId);
+        if(index == -1){
+          book.classList.add('favorite');
+        
+          favoriteBooks.push(bookId);
+          console.log('czyta id po if?:',bookId);
+
+        }else {
+          book.classList.remove('favorite');
+          favoriteBooks.splice(index, 1);
+        }
+        console.log('tablica po if: ',favoriteBooks);
+
       });
     }
 
