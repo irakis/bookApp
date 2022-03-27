@@ -7,7 +7,7 @@
     books: {
       booksPanel: '.books-panel',
       bookList: '.books-list',
-      bookImageLink: '#data-id',
+      bookImageLink: 'data-id',
       cardOfBook: '.book',
       bookImage: '.book__image',
     },
@@ -63,26 +63,46 @@
     console.log('filterForm', filterForm);
 
     const filters = [];
-    console.log(filters);
 
     filterForm.addEventListener('click', function (event) {
-      console.log(event);
 
-      
+      if (event.target.type == 'checkbox') {
 
-      const checkbox = document.querySelectorAll(select.InputCheckbox, select.InputName);
-      console.log('checkbox', checkbox);
-      const checkboxValue = checkbox.getAttribute('value');
-      console.log(checkboxValue);
+        const value = event.target.value;
+        const isChecked = event.target.checked;
 
-
-      if (event.target == checkbox) {
-        console.log('warunek działa');
-        //const value = event.target.getAttribute('value');
-        console.log(value);
+        if (isChecked) {
+          filters.push(value);
+        } else {
+          filters.splice(filters.indexOf(value), 1);
+        }
       }
+      filterBooks();
     });
+    const filterBooks = function () {
+
+      for (let book of dataSource.books) {
+
+        const bookId = book.id;
+        const selected = document.querySelector(select.books.bookImage + '[data-id = "' + bookId + '"]');
+        let shouldBeHidden = false;
+
+        for (let filter of filters) {
+          if (!book.details[filter]) {
+
+            shouldBeHidden = true;
+            break;
+          }
+        }
+        if (shouldBeHidden) {
+          selected.classList.add('hidden');
+        } else {
+          selected.classList.remove('hidden');
+        }
+      }
+    };
   };
   filtering();
+
 
 }
