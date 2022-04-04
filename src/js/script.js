@@ -71,6 +71,7 @@
         event.preventDefault();
         const bookId = event.target.offsetParent.getAttribute('data-id');
         if (!_self.favoriteBooks.includes(bookId) && event.target.offsetParent.classList.contains('book__image')) {
+          event.preventDefault();
           event.target.offsetParent.classList.add('favorite');
           _self.favoriteBooks.push(bookId);
         } else if (_self.favoriteBooks.includes(bookId)) {
@@ -78,6 +79,9 @@
           const index = _self.favoriteBooks.indexOf(bookId);
           _self.favoriteBooks.splice(index, 1);
         }
+      });
+      this.booksContainer.addEventListener('click', function(event) {
+        event.preventDefault();
       });
     }
 
