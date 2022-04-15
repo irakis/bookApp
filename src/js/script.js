@@ -68,7 +68,6 @@
     initAction() {
       const _self = this;
       this.booksContainer.addEventListener('dblclick', function (event) {
-        event.preventDefault();
         const bookId = event.target.offsetParent.getAttribute('data-id');
         if (!_self.favoriteBooks.includes(bookId) && event.target.offsetParent.classList.contains('book__image')) {
           event.preventDefault();
